@@ -1,9 +1,35 @@
-/* Mevcut stiller korunacak */
-/* Main Styles */
+/* Reset ve Temel Stiller */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
 body {
     background: linear-gradient(135deg, #6CB4EE 0%, #0F52BA 100%);
-    min-height: 100vh;
     font-family: 'Poppins', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Ana Container Stilleri */
+.app-container {
+    min-height: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.content-wrapper {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
 }
 
 .card {
@@ -12,91 +38,40 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s ease;
+    margin-bottom: 60px;
 }
 
-/* Score Board Styles */
-.score-board {
-    display: flex;
-    justify-content: space-around;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 1rem;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1.5rem;
-}
-
-.score-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
+/* Typography */
+h1 {
     color: #1a237e;
-}
-
-.score-item i {
-    font-size: 1.2rem;
-}
-
-.score-item:nth-child(1) i {
-    color: #ffd700;
-}
-
-.score-item:nth-child(2) i {
-    color: #4caf50;
-}
-
-.score-item:nth-child(3) i {
-    color: #f44336;
-}
-
-/* Question Styles */
-.question-container {
-    background: #f8f9fa;
-    padding: 2rem;
-    border-radius: 15px;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.question-container:hover {
-    transform: translateY(-2px);
-}
-
-.question-text {
-    font-size: 2.5rem;
     font-weight: 700;
-    color: #1a237e;
-    margin: 1rem 0;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Alert Styles */
-.alert {
-    border-radius: 10px;
-    padding: 1rem;
-    margin-top: 1rem;
-    animation: slideIn 0.3s ease;
+h3 {
+    color: #303f9f;
+    font-weight: 600;
 }
 
-.alert-success {
-    background-color: #e8f5e9;
-    border-color: #c8e6c9;
-    color: #2e7d32;
+@media (min-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
 }
 
-.alert-danger {
-    background-color: #ffebee;
-    border-color: #ffcdd2;
-    color: #c62828;
-}
-
-
-/* Game Selection Styles */
+/* Game Selection Cards */
 .game-cards {
     display: grid;
     grid-gap: 1.5rem;
     margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+    .game-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .game-card {
@@ -186,73 +161,58 @@ body {
     transform: scale(1.05);
 }
 
-/* Responsive Design */
-@media (min-width: 768px) {
-    .game-cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* Score Board Styles */
+.score-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.75rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
 }
 
-/* Card Animation */
-@keyframes cardAppear {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.score-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #1a237e;
+    font-size: 0.9rem;
 }
 
-.game-card {
-    animation: cardAppear 0.5s ease forwards;
+.score-item i {
+    font-size: 1.2rem;
 }
 
-.game-card:nth-child(2) {
-    animation-delay: 0.2s;
+.score-item:nth-child(1) i {
+    color: #ffd700;
 }
 
-/* Hover Effects */
-.game-card:hover .game-card-icon {
-    animation: pulse 1s infinite;
+.score-item:nth-child(2) i {
+    color: #4caf50;
 }
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-
-    100% {
-        transform: scale(1);
-    }
+.score-item:nth-child(3) i {
+    color: #f44336;
 }
 
-/* Status Badge for Coming Soon */
-.game-card:nth-child(2) .play-button {
-    background: linear-gradient(45deg, #9e9e9e, #757575);
+/* Question Styles */
+.question-container {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
-.game-card:nth-child(2):hover .play-button {
-    background: linear-gradient(45deg, #757575, #616161);
-}
-
-/* Animations */
-@keyframes slideIn {
-    from {
-        transform: translateY(-10px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+.question-text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a237e;
+    margin: 0.5rem 0;
 }
 
 /* Summary Section Styles */
@@ -287,21 +247,24 @@ body {
     border-radius: 15px;
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
 }
 
 .summary-table table {
     margin-bottom: 0;
+    min-width: 100%;
 }
 
 .summary-table th {
     color: #1a237e;
     font-weight: 600;
     border-bottom: 2px solid #e3f2fd;
+    padding: 0.75rem;
 }
 
 .summary-table td {
     vertical-align: middle;
-    padding: 1rem 0.5rem;
+    padding: 0.75rem;
 }
 
 .summary-table tr {
@@ -327,22 +290,169 @@ body {
     background-color: #f44336;
 }
 
-.question-history {
-    color: #1a237e;
+/* Form Elements */
+.form-control {
+    height: 50px;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #e3f2fd;
+    padding: 12px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #2196f3;
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+}
+
+/* Buttons */
+.btn {
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 10px;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
 }
 
-.user-answer {
-    color: #666;
+.btn-primary {
+    background: linear-gradient(45deg, #2196f3, #1976d2);
+    border: none;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
 }
 
-.user-answer.correct {
-    color: #4caf50;
+.btn-primary:hover {
+    background: linear-gradient(45deg, #1976d2, #1565c0);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
 }
 
-.user-answer.wrong {
-    color: #f44336;
+.btn-secondary {
+    background: #e0e0e0;
+    color: #757575;
+    border: none;
 }
 
+/* Alert Styles */
+.alert {
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+    animation: slideIn 0.3s ease;
+}
 
-/* Mevcut diğer stiller... */
+.alert-success {
+    background-color: #e8f5e9;
+    border-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    border-color: #ffcdd2;
+    color: #c62828;
+}
+
+/* Mobil Responsive */
+@media (max-width: 576px) {
+    .card {
+        padding: 1rem !important;
+    }
+
+    .game-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .score-item {
+        font-size: 0.8rem;
+    }
+
+    .question-text {
+        font-size: 1.8rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin: 0.5rem 0 !important;
+    }
+
+    .summary-table {
+        margin: 0 -1rem;
+    }
+
+    .summary-table::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 20px;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9));
+        pointer-events: none;
+    }
+}
+
+/* Klavye Açıkken Görünüm */
+@media screen and (max-height: 600px) {
+    .app-container {
+        align-items: flex-start;
+        padding-top: 10px;
+    }
+
+    .card {
+        margin-bottom: 80px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .score-board {
+        padding: 0.5rem;
+    }
+
+    .question-container {
+        padding: 0.75rem;
+        margin: 0.5rem 0;
+    }
+
+    .question-text {
+        font-size: 1.6rem;
+    }
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* iOS Fixes */
+@supports (-webkit-touch-callout: none) {
+    .form-control {
+        font-size: 16px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+
+    .game-card:hover,
+    .btn:hover {
+        transform: none;
+    }
+}

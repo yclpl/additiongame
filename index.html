@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Matematik Oyunları</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -10,123 +10,128 @@
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container vh-100 d-flex align-items-center justify-content-center">
-        <div class="card p-5 w-100" style="max-width: 500px;">
-            <div class="text-center mb-4">
-                <h1 class="mb-0">Matematik Oyunları</h1>
-                <p>Eğlenceli matematik oyunları ile öğrenelim!</p>
-            </div>
-
-            <!-- Giriş Bölümü -->
-            <div id="login-section" class="mt-4">
-                <div class="form-group">
-                    <label for="username" class="form-label">Kullanıcı Adı</label>
-                    <input type="text" class="form-control mb-3" id="username" required>
-                </div>
-                <button onclick="startGame(event)" class="btn btn-primary w-100">Başla</button>
-            </div>
-
-            <!-- Oyun Seçim Bölümü -->
-            <div id="game-selection" style="display: none;">
-                <h3 class="text-center mb-4">Oyun Seçimi</h3>
-                <div class="game-cards">
-                    <div class="game-card" onclick="startMathGame()">
-                        <div class="game-card-icon">
-                            <i class="fas fa-plus-circle"></i>
-                        </div>
-                        <div class="game-card-content">
-                            <h4>Toplama Oyunu</h4>
-                            <p>Toplama işlemlerini öğrenelim!</p>
-                            <span class="play-button">
-                                <i class="fas fa-play"></i> Oyna
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="game-card" onclick="startEliminationGame()">
-                        <div class="game-card-icon">
-                            <i class="fas fa-sort-numeric-up"></i>
-                        </div>
-                        <div class="game-card-content">
-                            <h4>Fazla Sayıyı Eleme</h4>
-                            <p>Farklı olan sayıyı bul!</p>
-                            <span class="play-button">
-                                <i class="fas fa-play"></i> Yakında
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Toplama Oyunu Seviye Seçim Bölümü -->
-            <div id="level-selection" style="display: none;">
-                <h3 class="text-center mb-4">Seviye Seçimi</h3>
-                <div class="d-grid gap-3">
-                    <button onclick="startLevel(1)" class="btn btn-primary level-button">Seviye 1</button>
-                    <button onclick="startLevel(2)" class="btn btn-primary level-button">Seviye 2</button>
-                    <button onclick="startLevel(3)" class="btn btn-primary level-button">Seviye 3</button>
-                    <button onclick="startLevel(4)" class="btn btn-primary level-button">Seviye 4</button>
-                    <button onclick="startLevel(5)" class="btn btn-primary level-button">Seviye 5</button>
-                </div>
-            </div>
-
-            <!-- Toplama Oyunu Oyun Bölümü -->
-            <div id="game-section" style="display: none;">
+    <div class="app-container">
+        <div class="content-wrapper">
+            <!-- Header Card -->
+            <div class="card p-3 p-sm-5 mb-3">
                 <div class="text-center">
-                    <div class="score-board mb-3">
-                        <div class="score-item">
-                            <i class="fas fa-star"></i>
-                            <span id="current-score">0</span> Puan
-                        </div>
-                        <div class="score-item">
-                            <i class="fas fa-check"></i>
-                            <span id="correct-count">0</span> Doğru
-                        </div>
-                        <div class="score-item">
-                            <i class="fas fa-times"></i>
-                            <span id="wrong-count">0</span> Yanlış
-                        </div>
-                    </div>
-                    <div id="progress-text" class="mb-3"></div>
-                    <div class="question-container">
-                        <h3>Soru:</h3>
-                        <div id="question" class="question-text mb-4"></div>
-                    </div>
-                    <div class="form-group mb-4">
-                        <input type="number" class="form-control" id="answer" placeholder="Cevabınızı yazın">
-                    </div>
-                    <div id="alert-section" style="display: none;"></div>
-                    <button onclick="checkAnswer()" class="btn btn-primary mt-3 me-2">Kontrol Et</button>
-                    <button onclick="exitLevel()" class="btn btn-secondary mt-3">Seviye Seçimine Dön</button>
+                    <h1 class="mb-0">Matematik Oyunları</h1>
+                    <p>Eğlenceli matematik oyunları ile öğrenelim!</p>
                 </div>
             </div>
 
-            <!-- Skor Özet Ekranı -->
-            <div id="summary-section" style="display: none;">
-                <h3 class="text-center mb-4">Seviye Özeti</h3>
-                <div class="final-score-board mb-4">
-                    <div class="final-score">
-                        <span id="final-total-score">0</span>
-                        <label>Toplam Puan</label>
+            <!-- Main Content Card -->
+            <div class="card p-3 p-sm-5">
+                <!-- Login Section -->
+                <div id="login-section" class="mt-4">
+                    <div class="form-group">
+                        <label for="username" class="form-label">Kullanıcı Adı</label>
+                        <input type="text" class="form-control mb-3" id="username" required>
+                    </div>
+                    <button onclick="startGame(event)" class="btn btn-primary w-100">Başla</button>
+                </div>
+
+                <!-- Game Selection Section -->
+                <div id="game-selection" style="display: none;">
+                    <h3 class="text-center mb-4">Oyun Seçimi</h3>
+                    <div class="game-cards">
+                        <div class="game-card" onclick="startMathGame()">
+                            <div class="game-card-icon">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <div class="game-card-content">
+                                <h4>Toplama Oyunu</h4>
+                                <p>Toplama işlemlerini öğrenelim!</p>
+                                <span class="play-button">
+                                    <i class="fas fa-play"></i> Oyna
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="game-card" onclick="startEliminationGame()">
+                            <div class="game-card-icon">
+                                <i class="fas fa-sort-numeric-up"></i>
+                            </div>
+                            <div class="game-card-content">
+                                <h4>Fazla Sayıyı Eleme</h4>
+                                <p>Farklı olan sayıyı bul!</p>
+                                <span class="play-button">
+                                    <i class="fas fa-play"></i> Yakında
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="summary-table mb-4">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Soru</th>
-                                <th>İşlem</th>
-                                <th>Cevabınız</th>
-                                <th>Sonuç</th>
-                            </tr>
-                        </thead>
-                        <tbody id="summary-table-body">
-                            <!-- JavaScript ile doldurulacak -->
-                        </tbody>
-                    </table>
+
+                <!-- Level Selection Section -->
+                <div id="level-selection" style="display: none;">
+                    <h3 class="text-center mb-4">Seviye Seçimi</h3>
+                    <div class="d-grid gap-3">
+                        <button onclick="startLevel(1)" class="btn btn-primary level-button">Seviye 1</button>
+                        <button onclick="startLevel(2)" class="btn btn-primary level-button">Seviye 2</button>
+                        <button onclick="startLevel(3)" class="btn btn-primary level-button">Seviye 3</button>
+                        <button onclick="startLevel(4)" class="btn btn-primary level-button">Seviye 4</button>
+                        <button onclick="startLevel(5)" class="btn btn-primary level-button">Seviye 5</button>
+                    </div>
                 </div>
-                <div class="text-center">
-                    <button onclick="exitToLevelSelection()" class="btn btn-primary">Seviye Seçimine Dön</button>
+
+                <!-- Game Section -->
+                <div id="game-section" style="display: none;">
+                    <div class="text-center">
+                        <div class="score-board mb-3">
+                            <div class="score-item">
+                                <i class="fas fa-star"></i>
+                                <span id="current-score">0</span> Puan
+                            </div>
+                            <div class="score-item">
+                                <i class="fas fa-check"></i>
+                                <span id="correct-count">0</span> Doğru
+                            </div>
+                            <div class="score-item">
+                                <i class="fas fa-times"></i>
+                                <span id="wrong-count">0</span> Yanlış
+                            </div>
+                        </div>
+                        <div id="progress-text" class="mb-3"></div>
+                        <div class="question-container">
+                            <h3>Soru:</h3>
+                            <div id="question" class="question-text mb-4"></div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <input type="number" class="form-control" id="answer" placeholder="Cevabınızı yazın">
+                        </div>
+                        <div id="alert-section" style="display: none;"></div>
+                        <button onclick="checkAnswer()" class="btn btn-primary mt-3 me-2">Kontrol Et</button>
+                        <button onclick="exitLevel()" class="btn btn-secondary mt-3">Seviye Seçimine Dön</button>
+                    </div>
+                </div>
+
+                <!-- Summary Section -->
+                <div id="summary-section" style="display: none;">
+                    <h3 class="text-center mb-4">Seviye Özeti</h3>
+                    <div class="final-score-board mb-4">
+                        <div class="final-score">
+                            <span id="final-total-score">0</span>
+                            <label>Toplam Puan</label>
+                        </div>
+                    </div>
+                    <div class="summary-table mb-4">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Soru</th>
+                                    <th>İşlem</th>
+                                    <th>Cevabınız</th>
+                                    <th>Sonuç</th>
+                                </tr>
+                            </thead>
+                            <tbody id="summary-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center">
+                        <button onclick="exitToLevelSelection()" class="btn btn-primary">Seviye Seçimine Dön</button>
+                    </div>
                 </div>
             </div>
         </div>
