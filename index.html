@@ -26,31 +26,37 @@
                 <button onclick="startGame(event)" class="btn btn-primary w-100">Başla</button>
             </div>
 
-            <!-- Oyun Seçim Bölümü -->
-            <div id="game-selection" style="display: none;">
-                <h3 class="text-center mb-4">Oyun Seçimi</h3>
-                <div class="game-buttons d-grid gap-3">
-                    <button onclick="startMathGame()" class="btn btn-game">
-                        <div class="game-icon">
-                            <i class="fas fa-plus-circle"></i>
-                        </div>
-                        <div class="game-info">
-                            <h4>Toplama Oyunu</h4>
-                            <p>Toplama işlemlerini öğrenelim!</p>
-                        </div>
-                    </button>
-                    
-                    <button onclick="startEliminationGame()" class="btn btn-game">
-                        <div class="game-icon">
-                            <i class="fas fa-sort-numeric-up"></i>
-                        </div>
-                        <div class="game-info">
-                            <h4>Fazla Sayıyı Eleme</h4>
-                            <p>Farklı olan sayıyı bul!</p>
-                        </div>
-                    </button>
-                </div>
+<!-- Oyun Seçim Bölümü -->
+<div id="game-selection" style="display: none;">
+    <h3 class="text-center mb-4">Oyun Seçimi</h3>
+    <div class="game-cards">
+        <div class="game-card" onclick="startMathGame()">
+            <div class="game-card-icon">
+                <i class="fas fa-plus-circle"></i>
             </div>
+            <div class="game-card-content">
+                <h4>Toplama Oyunu</h4>
+                <p>Toplama işlemlerini öğrenelim!</p>
+                <span class="play-button">
+                    <i class="fas fa-play"></i> Oyna
+                </span>
+            </div>
+        </div>
+        
+        <div class="game-card" onclick="startEliminationGame()">
+            <div class="game-card-icon">
+                <i class="fas fa-sort-numeric-up"></i>
+            </div>
+            <div class="game-card-content">
+                <h4>Fazla Sayıyı Eleme</h4>
+                <p>Farklı olan sayıyı bul!</p>
+                <span class="play-button">
+                    <i class="fas fa-play"></i> Yakında
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!-- Toplama Oyunu Seviye Seçim Bölümü -->
             <div id="level-selection" style="display: none;">
@@ -67,6 +73,20 @@
             <!-- Toplama Oyunu Oyun Bölümü -->
             <div id="game-section" style="display: none;">
                 <div class="text-center">
+                    <div class="score-board mb-3">
+                        <div class="score-item">
+                            <i class="fas fa-star"></i>
+                            <span id="current-score">0</span> Puan
+                        </div>
+                        <div class="score-item">
+                            <i class="fas fa-check"></i>
+                            <span id="correct-count">0</span> Doğru
+                        </div>
+                        <div class="score-item">
+                            <i class="fas fa-times"></i>
+                            <span id="wrong-count">0</span> Yanlış
+                        </div>
+                    </div>
                     <div id="progress-text" class="mb-3"></div>
                     <div class="question-container">
                         <h3>Soru:</h3>

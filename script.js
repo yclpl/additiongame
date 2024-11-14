@@ -3,6 +3,9 @@ let currentQuestionNumber = 1;
 let totalQuestionsPerLevel = 10;
 let currentLevel = 1;
 let currentUser = '';
+let currentScore = 0;
+let correctCount = 0;
+let wrongCount = 0;
 
 function startGame(event) {
     event.preventDefault();
@@ -15,7 +18,8 @@ function startGame(event) {
             username: username,
             level: 1,
             currentQuestion: 1,
-            completedLevels: []
+            completedLevels: [],
+            highScore: 0
         };
         
         localStorage.setItem(username, JSON.stringify(userData));
@@ -94,18 +98,19 @@ function generateQuestion(level) {
     }
 
     currentAnswer = num1 + num2;
-    const questionElement = document.getElementById("question");
-    questionElement.textContent = `${num1} + ${num2} = ?`;
+    document.getElementById("question").textContent = `${num1} + ${num2} = ?`;
     hideAlert();
 
-    const userData = JSON.parse(localStorage.getItem(currentUser));
-    userData.currentQuestion = currentQuestionNumber;
-    localStorage.setItem(currentUser, JSON.stringify(userData));
+    updateScoreDisplay();
 }
 
 function startLevel(level) {
     currentLevel = level;
     currentQuestionNumber = 1;
+    currentScore = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    
     document.getElementById("level-selection").style.display = "none";
     document.getElementById("game-section").style.display = "block";
     generateQuestion(level);
@@ -123,6 +128,14 @@ function startLevel(level) {
             checkAnswer();
         }
     });
+    
+    updateScoreDisplay();
+}
+
+function updateScoreDisplay() {
+    document.getElementById("current-score").textContent = currentScore;
+    document.getElementById("correct-count").textContent = correctCount;
+    document.getElementById("wrong-count").textContent = wrongCount;
 }
 
 function hideAlert() {
@@ -144,35 +157,65 @@ function checkAnswer() {
     const answerInput = document.getElementById("answer");
     const userAnswer = parseInt(answerInput.value);
     const userData = JSON.parse(localStorage.getItem(currentUser));
-
-    if (!isNaN(userAnswer) && userAnswer === currentAnswer) {
+    
+    if (!isNaN(userAnswer)) {
+        if (userAnswer === currentAnswer) {
+            currentScore += 10;
+            correctCount++;
+            showAlert("Doğru cevap! (+10 puan)", true);
+        } else {
+            currentScore -= 5;
+            wrongCount++;
+            showAlert(`Yanlış cevap! (-5 puan) Doğru cevap: ${currentAnswer}`, false);
+        }
+        
+        updateScoreDisplay();
+        answerInput.value = "";
+        
+        // Her durumda bir sonraki soruya geç
         if (currentQuestionNumber < totalQuestionsPerLevel) {
-            showAlert("Doğru cevap! 👏", true);
             setTimeout(() => {
                 currentQuestionNumber++;
-                answerInput.value = "";
                 generateQuestion(currentLevel);
                 hideAlert();
-            }, 1000);
-        } else {
-            if (currentLevel === userData.level) {
-                userData.level = Math.min(currentLevel + 1, 5);
-                if (!userData.completedLevels.includes(currentLevel)) {
-                    userData.completedLevels.push(currentLevel);
-                }
-                localStorage.setItem(currentUser, JSON.stringify(userData));
-            }
-            
-            showAlert("Tebrikler! Seviyeyi tamamladınız! 🎉", true);
-            setTimeout(() => {
-                exitLevel();
-                updateLevelVisibility();
             }, 1500);
+        } else {
+            // Seviye tamamlandı
+            const requiredScore = totalQuestionsPerLevel * 10; // Maksimum puan
+            const passingScore = requiredScore * 0.7; // Geçme puanı (%70)
+            
+            if (currentScore >= passingScore) {
+                if (currentLevel === userData.level) {
+                    userData.level = Math.min(currentLevel + 1, 5);
+                    if (!userData.completedLevels.includes(currentLevel)) {
+                        userData.completedLevels.push(currentLevel);
+                    }
+                }
+                
+                if (currentScore > (userData.highScore || 0)) {
+                    userData.highScore = currentScore;
+                }
+                
+                localStorage.setItem(currentUser, JSON.stringify(userData));
+                
+                setTimeout(() => {
+                    showAlert(`Tebrikler! Seviyeyi ${currentScore} puan ile tamamladınız! 🎉`, true);
+                    setTimeout(() => {
+                        exitLevel();
+                        updateLevelVisibility();
+                    }, 2000);
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    showAlert(`Seviyeyi geçmek için en az ${passingScore} puan gerekli. Tekrar deneyin!`, false);
+                    setTimeout(() => {
+                        exitLevel();
+                    }, 2000);
+                }, 1000);
+            }
         }
     } else {
-        showAlert("Yanlış cevap! Tekrar deneyin. 🤔");
-        answerInput.value = "";
-        answerInput.focus();
+        showAlert("Lütfen bir sayı girin!", false);
     }
 }
 

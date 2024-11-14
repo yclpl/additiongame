@@ -1,3 +1,4 @@
+/* Mevcut stiller korunacak */
 /* Main Styles */
 body {
     background: linear-gradient(135deg, #6CB4EE 0%, #0F52BA 100%);
@@ -14,22 +15,39 @@ body {
     transition: transform 0.3s ease;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-}
-
-/* Typography */
-h1 {
-    color: #1a237e;
-    font-weight: 700;
-    font-size: 2.5rem;
+/* Score Board Styles */
+.score-board {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-h3 {
-    color: #303f9f;
+.score-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-weight: 600;
+    color: #1a237e;
+}
+
+.score-item i {
+    font-size: 1.2rem;
+}
+
+.score-item:nth-child(1) i {
+    color: #ffd700;
+}
+
+.score-item:nth-child(2) i {
+    color: #4caf50;
+}
+
+.score-item:nth-child(3) i {
+    color: #f44336;
 }
 
 /* Question Styles */
@@ -39,6 +57,11 @@ h3 {
     border-radius: 15px;
     margin-bottom: 2rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.question-container:hover {
+    transform: translateY(-2px);
 }
 
 .question-text {
@@ -48,49 +71,188 @@ h3 {
     margin: 1rem 0;
 }
 
-#progress-text {
-    color: #757575;
-    font-size: 1.1rem;
-    font-weight: 500;
+/* Alert Styles */
+.alert {
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+    animation: slideIn 0.3s ease;
 }
 
-/* Game Selection Buttons */
-.btn-game {
-    display: flex;
-    align-items: center;
+.alert-success {
+    background-color: #e8f5e9;
+    border-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    border-color: #ffcdd2;
+    color: #c62828;
+}
+
+
+/* Game Selection Styles */
+.game-cards {
+    display: grid;
+    grid-gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.game-card {
+    background: white;
+    border-radius: 20px;
     padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: #2196f3;
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
+}
+
+.game-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(33, 150, 243, 0.1), rgba(33, 150, 243, 0));
+    z-index: 0;
+}
+
+.game-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
     background: linear-gradient(45deg, #2196f3, #1976d2);
-    border: none;
     border-radius: 15px;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.game-card-icon i {
+    font-size: 1.8rem;
     color: white;
-    text-align: left;
+}
+
+.game-card-content {
+    position: relative;
+    z-index: 1;
+}
+
+.game-card-content h4 {
+    color: #1a237e;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.game-card-content p {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.play-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.2rem;
+    background: linear-gradient(45deg, #2196f3, #1976d2);
+    color: white;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 
-.btn-game:hover {
-    transform: translateY(-5px);
+.play-button i {
+    font-size: 0.8rem;
+}
+
+.game-card:hover .play-button {
     background: linear-gradient(45deg, #1976d2, #1565c0);
-    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+    transform: scale(1.05);
 }
 
-.game-icon {
-    font-size: 2.5rem;
-    margin-right: 1.5rem;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
+/* Responsive Design */
+@media (min-width: 768px) {
+    .game-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.game-info {
-    flex: 1;
+/* Card Animation */
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.game-info h4 {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
+.game-card {
+    animation: cardAppear 0.5s ease forwards;
 }
+
+.game-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+/* Hover Effects */
+.game-card:hover .game-card-icon {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Status Badge for Coming Soon */
+.game-card:nth-child(2) .play-button {
+    background: linear-gradient(45deg, #9e9e9e, #757575);
+}
+
+.game-card:nth-child(2):hover .play-button {
+    background: linear-gradient(45deg, #757575, #616161);
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Mevcut diğer stiller... */
