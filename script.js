@@ -6,6 +6,7 @@ let currentUser = '';
 let currentScore = 0;
 let correctCount = 0;
 let wrongCount = 0;
+let questionHistory = []; // Soru geçmişini tutacak array
 
 function startGame(event) {
     event.preventDefault();
@@ -41,32 +42,34 @@ function startEliminationGame() {
     alert("Fazla Sayıyı Eleme oyunu yakında eklenecek!");
 }
 
-function updateLevelVisibility() {
-    const userData = JSON.parse(localStorage.getItem(currentUser));
-    const levelButtons = document.querySelectorAll(".level-button");
+function startLevel(level) {
+    currentLevel = level;
+    currentQuestionNumber = 1;
+    currentScore = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    questionHistory = []; // Soru geçmişini sıfırla
     
-    levelButtons.forEach((button, index) => {
-        const level = index + 1;
-        button.style.display = "block";
-        
-        if (level <= userData.level) {
-            button.disabled = false;
-            button.classList.remove('btn-secondary');
-            button.classList.add('btn-primary');
-        } else {
-            button.disabled = true;
-            button.classList.remove('btn-primary');
-            button.classList.add('btn-secondary');
-        }
-        
-        if (userData.completedLevels.includes(level)) {
-            button.innerHTML = `Seviye ${level} <span class="badge bg-success ms-2">Tamamlandı</span>`;
-        } else if (level === userData.level) {
-            button.innerHTML = `Seviye ${level} <span class="badge bg-warning ms-2">Mevcut</span>`;
-        } else {
-            button.innerHTML = `Seviye ${level}`;
+    document.getElementById("level-selection").style.display = "none";
+    document.getElementById("game-section").style.display = "block";
+    document.getElementById("summary-section").style.display = "none";
+    generateQuestion(level);
+    
+    const answerInput = document.getElementById("answer");
+    answerInput.value = "";
+    answerInput.focus();
+    
+    const newAnswerInput = answerInput.cloneNode(true);
+    answerInput.parentNode.replaceChild(newAnswerInput, answerInput);
+    
+    newAnswerInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            checkAnswer();
         }
     });
+    
+    updateScoreDisplay();
 }
 
 function generateQuestion(level) {
@@ -98,38 +101,108 @@ function generateQuestion(level) {
     }
 
     currentAnswer = num1 + num2;
-    document.getElementById("question").textContent = `${num1} + ${num2} = ?`;
-    hideAlert();
+    const questionText = `${num1} + ${num2} = ?`;
+    document.getElementById("question").textContent = questionText;
+    
+    // Soru bilgilerini kaydet
+    questionHistory.push({
+        questionNumber: currentQuestionNumber,
+        question: questionText,
+        correctAnswer: currentAnswer,
+        userAnswer: null,
+        isCorrect: null
+    });
 
+    hideAlert();
     updateScoreDisplay();
 }
 
-function startLevel(level) {
-    currentLevel = level;
-    currentQuestionNumber = 1;
-    currentScore = 0;
-    correctCount = 0;
-    wrongCount = 0;
-    
-    document.getElementById("level-selection").style.display = "none";
-    document.getElementById("game-section").style.display = "block";
-    generateQuestion(level);
-    
+// ... [Önceki kodlar aynı kalacak]
+
+function checkAnswer() {
     const answerInput = document.getElementById("answer");
-    answerInput.value = "";
-    answerInput.focus();
+    const userAnswer = parseInt(answerInput.value);
+    const userData = JSON.parse(localStorage.getItem(currentUser));
     
-    const newAnswerInput = answerInput.cloneNode(true);
-    answerInput.parentNode.replaceChild(newAnswerInput, answerInput);
-    
-    newAnswerInput.addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            checkAnswer();
+    if (!isNaN(userAnswer)) {
+        // Cevabı kaydet
+        const currentQuestion = questionHistory[currentQuestionNumber - 1];
+        currentQuestion.userAnswer = userAnswer;
+        currentQuestion.isCorrect = userAnswer === currentAnswer;
+
+        if (userAnswer === currentAnswer) {
+            currentScore += 10;
+            correctCount++;
+            showAlert("Doğru cevap! (+10 puan)", true);
+        } else {
+            currentScore -= 5;
+            wrongCount++;
+            showAlert(`Yanlış cevap! (-5 puan) Doğru cevap: ${currentAnswer}`, false);
         }
-    });
+        
+        updateScoreDisplay();
+        answerInput.value = "";
+        
+        if (currentQuestionNumber < totalQuestionsPerLevel) {
+            setTimeout(() => {
+                currentQuestionNumber++;
+                generateQuestion(currentLevel);
+                hideAlert();
+            }, 1500);
+        } else {
+            // Seviye tamamlandı
+            setTimeout(() => {
+                showSummary();
+                const requiredScore = totalQuestionsPerLevel * 10;
+                const passingScore = requiredScore * 0.7;
+                
+                if (currentScore >= passingScore) {
+                    if (currentLevel === userData.level) {
+                        userData.level = Math.min(currentLevel + 1, 5);
+                        if (!userData.completedLevels.includes(currentLevel)) {
+                            userData.completedLevels.push(currentLevel);
+                        }
+                    }
+                    
+                    if (currentScore > (userData.highScore || 0)) {
+                        userData.highScore = currentScore;
+                    }
+                    
+                    localStorage.setItem(currentUser, JSON.stringify(userData));
+                }
+            }, 1500);
+        }
+    } else {
+        showAlert("Lütfen bir sayı girin!", false);
+    }
+}
+
+function showSummary() {
+    // Oyun bölümünü gizle ve özet bölümünü göster
+    document.getElementById("game-section").style.display = "none";
+    document.getElementById("summary-section").style.display = "block";
     
-    updateScoreDisplay();
+    // Final skorunu güncelle
+    document.getElementById("final-total-score").textContent = currentScore;
+    
+    // Özet tablosunu oluştur
+    const tableBody = document.getElementById("summary-table-body");
+    tableBody.innerHTML = ''; // Tabloyu temizle
+    
+    questionHistory.forEach(record => {
+        const row = document.createElement("tr");
+        const resultIcon = record.isCorrect ? 
+            '<div class="result-icon correct"><i class="fas fa-check"></i></div>' : 
+            '<div class="result-icon wrong"><i class="fas fa-times"></i></div>';
+            
+        row.innerHTML = `
+            <td class="question-history">Soru ${record.questionNumber}</td>
+            <td>${record.question}</td>
+            <td class="user-answer ${record.isCorrect ? 'correct' : 'wrong'}">${record.userAnswer}</td>
+            <td>${resultIcon}</td>
+        `;
+        tableBody.appendChild(row);
+    });
 }
 
 function updateScoreDisplay() {
@@ -153,70 +226,38 @@ function showAlert(message, isSuccess = false) {
         </div>`;
 }
 
-function checkAnswer() {
-    const answerInput = document.getElementById("answer");
-    const userAnswer = parseInt(answerInput.value);
+function exitToLevelSelection() {
+    document.getElementById("summary-section").style.display = "none";
+    document.getElementById("level-selection").style.display = "block";
+    updateLevelVisibility();
+}
+
+function updateLevelVisibility() {
     const userData = JSON.parse(localStorage.getItem(currentUser));
+    const levelButtons = document.querySelectorAll(".level-button");
     
-    if (!isNaN(userAnswer)) {
-        if (userAnswer === currentAnswer) {
-            currentScore += 10;
-            correctCount++;
-            showAlert("Doğru cevap! (+10 puan)", true);
+    levelButtons.forEach((button, index) => {
+        const level = index + 1;
+        button.style.display = "block";
+        
+        if (level <= userData.level) {
+            button.disabled = false;
+            button.classList.remove('btn-secondary');
+            button.classList.add('btn-primary');
         } else {
-            currentScore -= 5;
-            wrongCount++;
-            showAlert(`Yanlış cevap! (-5 puan) Doğru cevap: ${currentAnswer}`, false);
+            button.disabled = true;
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-secondary');
         }
         
-        updateScoreDisplay();
-        answerInput.value = "";
-        
-        // Her durumda bir sonraki soruya geç
-        if (currentQuestionNumber < totalQuestionsPerLevel) {
-            setTimeout(() => {
-                currentQuestionNumber++;
-                generateQuestion(currentLevel);
-                hideAlert();
-            }, 1500);
+        if (userData.completedLevels.includes(level)) {
+            button.innerHTML = `Seviye ${level} <span class="badge bg-success ms-2">Tamamlandı</span>`;
+        } else if (level === userData.level) {
+            button.innerHTML = `Seviye ${level} <span class="badge bg-warning ms-2">Mevcut</span>`;
         } else {
-            // Seviye tamamlandı
-            const requiredScore = totalQuestionsPerLevel * 10; // Maksimum puan
-            const passingScore = requiredScore * 0.7; // Geçme puanı (%70)
-            
-            if (currentScore >= passingScore) {
-                if (currentLevel === userData.level) {
-                    userData.level = Math.min(currentLevel + 1, 5);
-                    if (!userData.completedLevels.includes(currentLevel)) {
-                        userData.completedLevels.push(currentLevel);
-                    }
-                }
-                
-                if (currentScore > (userData.highScore || 0)) {
-                    userData.highScore = currentScore;
-                }
-                
-                localStorage.setItem(currentUser, JSON.stringify(userData));
-                
-                setTimeout(() => {
-                    showAlert(`Tebrikler! Seviyeyi ${currentScore} puan ile tamamladınız! 🎉`, true);
-                    setTimeout(() => {
-                        exitLevel();
-                        updateLevelVisibility();
-                    }, 2000);
-                }, 1000);
-            } else {
-                setTimeout(() => {
-                    showAlert(`Seviyeyi geçmek için en az ${passingScore} puan gerekli. Tekrar deneyin!`, false);
-                    setTimeout(() => {
-                        exitLevel();
-                    }, 2000);
-                }, 1000);
-            }
+            button.innerHTML = `Seviye ${level}`;
         }
-    } else {
-        showAlert("Lütfen bir sayı girin!", false);
-    }
+    });
 }
 
 function exitLevel() {

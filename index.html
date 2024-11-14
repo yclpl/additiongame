@@ -26,37 +26,37 @@
                 <button onclick="startGame(event)" class="btn btn-primary w-100">Başla</button>
             </div>
 
-<!-- Oyun Seçim Bölümü -->
-<div id="game-selection" style="display: none;">
-    <h3 class="text-center mb-4">Oyun Seçimi</h3>
-    <div class="game-cards">
-        <div class="game-card" onclick="startMathGame()">
-            <div class="game-card-icon">
-                <i class="fas fa-plus-circle"></i>
+            <!-- Oyun Seçim Bölümü -->
+            <div id="game-selection" style="display: none;">
+                <h3 class="text-center mb-4">Oyun Seçimi</h3>
+                <div class="game-cards">
+                    <div class="game-card" onclick="startMathGame()">
+                        <div class="game-card-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <div class="game-card-content">
+                            <h4>Toplama Oyunu</h4>
+                            <p>Toplama işlemlerini öğrenelim!</p>
+                            <span class="play-button">
+                                <i class="fas fa-play"></i> Oyna
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card" onclick="startEliminationGame()">
+                        <div class="game-card-icon">
+                            <i class="fas fa-sort-numeric-up"></i>
+                        </div>
+                        <div class="game-card-content">
+                            <h4>Fazla Sayıyı Eleme</h4>
+                            <p>Farklı olan sayıyı bul!</p>
+                            <span class="play-button">
+                                <i class="fas fa-play"></i> Yakında
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="game-card-content">
-                <h4>Toplama Oyunu</h4>
-                <p>Toplama işlemlerini öğrenelim!</p>
-                <span class="play-button">
-                    <i class="fas fa-play"></i> Oyna
-                </span>
-            </div>
-        </div>
-        
-        <div class="game-card" onclick="startEliminationGame()">
-            <div class="game-card-icon">
-                <i class="fas fa-sort-numeric-up"></i>
-            </div>
-            <div class="game-card-content">
-                <h4>Fazla Sayıyı Eleme</h4>
-                <p>Farklı olan sayıyı bul!</p>
-                <span class="play-button">
-                    <i class="fas fa-play"></i> Yakında
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
 
             <!-- Toplama Oyunu Seviye Seçim Bölümü -->
             <div id="level-selection" style="display: none;">
@@ -98,6 +98,35 @@
                     <div id="alert-section" style="display: none;"></div>
                     <button onclick="checkAnswer()" class="btn btn-primary mt-3 me-2">Kontrol Et</button>
                     <button onclick="exitLevel()" class="btn btn-secondary mt-3">Seviye Seçimine Dön</button>
+                </div>
+            </div>
+
+            <!-- Skor Özet Ekranı -->
+            <div id="summary-section" style="display: none;">
+                <h3 class="text-center mb-4">Seviye Özeti</h3>
+                <div class="final-score-board mb-4">
+                    <div class="final-score">
+                        <span id="final-total-score">0</span>
+                        <label>Toplam Puan</label>
+                    </div>
+                </div>
+                <div class="summary-table mb-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Soru</th>
+                                <th>İşlem</th>
+                                <th>Cevabınız</th>
+                                <th>Sonuç</th>
+                            </tr>
+                        </thead>
+                        <tbody id="summary-table-body">
+                            <!-- JavaScript ile doldurulacak -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <button onclick="exitToLevelSelection()" class="btn btn-primary">Seviye Seçimine Dön</button>
                 </div>
             </div>
         </div>

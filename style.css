@@ -255,4 +255,94 @@ body {
     }
 }
 
+/* Summary Section Styles */
+.final-score-board {
+    background: linear-gradient(45deg, #2196f3, #1976d2);
+    padding: 2rem;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.final-score {
+    font-size: 1.2rem;
+}
+
+.final-score span {
+    display: block;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.final-score label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.summary-table {
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.summary-table table {
+    margin-bottom: 0;
+}
+
+.summary-table th {
+    color: #1a237e;
+    font-weight: 600;
+    border-bottom: 2px solid #e3f2fd;
+}
+
+.summary-table td {
+    vertical-align: middle;
+    padding: 1rem 0.5rem;
+}
+
+.summary-table tr {
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.result-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.result-icon.correct {
+    background-color: #4caf50;
+}
+
+.result-icon.wrong {
+    background-color: #f44336;
+}
+
+.question-history {
+    color: #1a237e;
+    font-weight: 500;
+}
+
+.user-answer {
+    color: #666;
+}
+
+.user-answer.correct {
+    color: #4caf50;
+}
+
+.user-answer.wrong {
+    color: #f44336;
+}
+
+
 /* Mevcut diğer stiller... */
