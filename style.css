@@ -359,6 +359,60 @@ h3 {
     color: #c62828;
 }
 
+
+/* Çok oyunculu mod stilleri */
+.player-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.player-name {
+    font-weight: 600;
+    color: #1a237e;
+    margin-bottom: 0.5rem;
+}
+
+.player-score {
+    font-size: 1.5rem;
+    color: #2196f3;
+    font-weight: 700;
+}
+
+.timer-bar {
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+.timer-progress {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(45deg, #2196f3, #1976d2);
+    border-radius: 3px;
+}
+
+.game-results {
+    text-align: center;
+    padding: 2rem;
+}
+
+.final-scores {
+    margin: 2rem 0;
+    font-size: 1.2rem;
+}
+
+.winner-announcement {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2196f3;
+    margin: 1rem 0;
+}
+
 /* Mobil Responsive */
 @media (max-width: 576px) {
     .card {
