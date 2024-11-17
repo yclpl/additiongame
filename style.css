@@ -398,6 +398,131 @@ h3 {
     }
 }
 
+
+/* Oyun Seçenekleri Stilleri */
+.options-container {
+    display: grid;
+    grid-gap: 1rem;
+    margin: 1rem 0;
+}
+
+.option-button {
+    background: white;
+    border: 2px solid #2196f3;
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.option-button:hover {
+    background: #e3f2fd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
+}
+
+.option-button.selected {
+    background: #2196f3;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+}
+
+.option-button.correct {
+    background: #4caf50;
+    border-color: #4caf50;
+    color: white;
+}
+
+.option-button.wrong {
+    background: #f44336;
+    border-color: #f44336;
+    color: white;
+}
+
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.button-group .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.button-group .btn i {
+    font-size: 1.1rem;
+}
+
+@media (max-width: 576px) {
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group .btn {
+        width: 100%;
+        margin: 0.25rem 0 !important;
+    }
+}
+
+/* Timer Styles */
+.timer-container {
+    position: absolute;
+    top: -25px;
+    right: 20px;
+}
+
+.timer {
+    background: linear-gradient(45deg, #ff5252, #ff1744);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(255, 23, 68, 0.3);
+}
+
+.timer i {
+    font-size: 1rem;
+}
+
+.timer.warning {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* Responsive düzenlemeler */
+@media (max-width: 576px) {
+    .option-button {
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+}
+
 /* Klavye Açıkken Görünüm */
 @media screen and (max-height: 600px) {
     .app-container {
