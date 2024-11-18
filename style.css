@@ -500,6 +500,117 @@ h3 {
     animation: pulse 1s infinite;
 }
 
+
+
+/* Görsel Soru Stilleri */
+.visual-question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.item-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.items-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    min-height: 100px;
+    min-width: 200px;
+    align-items: center;
+}
+
+.items-container i {
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.items-container i:hover {
+    transform: scale(1.1);
+}
+
+.item-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #1a237e;
+}
+
+.operator {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3b82f6;
+}
+
+.answer-box {
+    width: 80px;
+    height: 80px;
+    border: 3px solid #3b82f6;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1a237e;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Doğru cevap animasyonu */
+@keyframes celebrate {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.correct-answer .items-container i {
+    animation: celebrate 0.5s ease;
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 576px) {
+    .items-container {
+        min-width: 150px;
+        padding: 1rem;
+    }
+
+    .items-container i {
+        font-size: 1.5rem;
+    }
+
+    .item-label {
+        font-size: 1rem;
+    }
+
+    .operator {
+        font-size: 1.5rem;
+    }
+
+    .answer-box {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1);

@@ -120,48 +120,127 @@ function startLevel(level) {
     updateScoreDisplay();
 }
 
+
+// Nesnelerin tanımları
+const items = {
+    book: { 
+        icon: '<i class="fas fa-book"></i>', 
+        name: 'kitap',
+        color: '#3b82f6' // blue-500
+    },
+    car: { 
+        icon: '<i class="fas fa-car"></i>', 
+        name: 'araba',
+        color: '#ef4444' // red-500
+    },
+    apple: { 
+        icon: '<i class="fas fa-apple-alt"></i>', 
+        name: 'elma',
+        color: '#22c55e' // green-500
+    },
+    pencil: { 
+        icon: '<i class="fas fa-pencil-alt"></i>', 
+        name: 'kalem',
+        color: '#eab308' // yellow-500
+    },
+    ball: { 
+        icon: '<i class="fas fa-baseball-ball"></i>', 
+        name: 'top',
+        color: '#ec4899' // pink-500
+    },
+    star: { 
+        icon: '<i class="fas fa-star"></i>', 
+        name: 'yıldız',
+        color: '#f97316' // orange-500
+    }
+};
+
+const itemTypes = Object.keys(items);
+
 // Toplama Oyunu Fonksiyonları
 function generateQuestion(level) {
     let num1, num2;
     const progressText = document.getElementById("progress-text");
     progressText.textContent = `Soru ${currentQuestionNumber}/${totalQuestionsPerLevel}`;
 
-    switch (level) {
-        case 1:
-            num1 = Math.floor(Math.random() * 10) + 1;
-            num2 = Math.floor(Math.random() * 10) + 1;
-            break;
-        case 2:
-            num1 = Math.floor(Math.random() * 10) + 10;
-            num2 = Math.floor(Math.random() * 10) + 1;
-            break;
-        case 3:
-            num1 = Math.floor(Math.random() * 10) + 10;
-            num2 = Math.floor(Math.random() * 10) + 10;
-            break;
-        case 4:
-            num1 = Math.floor(Math.random() * 10) + 20;
-            num2 = Math.floor(Math.random() * 10) + 1;
-            break;
-        case 5:
-            num1 = Math.floor(Math.random() * 10) + 20;
-            num2 = Math.floor(Math.random() * 10) + 10;
-            break;
+    // Seviye 1 için görsel toplama soruları
+    if (level === 1) {
+        num1 = Math.floor(Math.random() * 5) + 1; // 1-5 arası
+        num2 = Math.floor(Math.random() * 5) + 1; // 1-5 arası
+        
+        // Rastgele iki farklı nesne seç
+        const item1Index = Math.floor(Math.random() * itemTypes.length);
+        let item2Index;
+        do {
+            item2Index = Math.floor(Math.random() * itemTypes.length);
+        } while (item2Index === item1Index);
+
+        const item1 = items[itemTypes[item1Index]];
+        const item2 = items[itemTypes[item2Index]];
+
+        // HTML oluştur
+        const visualQuestion = `
+            <div class="visual-question">
+                <div class="item-group">
+                    <div class="items-container" style="background-color: ${item1.color}15;">
+                        ${Array(num1).fill(item1.icon).join('')}
+                    </div>
+                    <span class="item-label">${num1} tane ${item1.name}</span>
+                </div>
+                
+                <div class="operator">+</div>
+                
+                <div class="item-group">
+                    <div class="items-container" style="background-color: ${item2.color}15;">
+                        ${Array(num2).fill(item2.icon).join('')}
+                    </div>
+                    <span class="item-label">${num2} tane ${item2.name}</span>
+                </div>
+                
+                <div class="operator">=</div>
+                
+                <div class="answer-box">?</div>
+            </div>
+        `;
+
+        document.getElementById("question").innerHTML = visualQuestion;
+    } else {
+        // Diğer seviyeler için normal sayısal sorular
+        switch (level) {
+            case 2:
+                num1 = Math.floor(Math.random() * 10) + 10;
+                num2 = Math.floor(Math.random() * 10) + 1;
+                break;
+            case 3:
+                num1 = Math.floor(Math.random() * 10) + 10;
+                num2 = Math.floor(Math.random() * 10) + 10;
+                break;
+            case 4:
+                num1 = Math.floor(Math.random() * 10) + 20;
+                num2 = Math.floor(Math.random() * 10) + 1;
+                break;
+            case 5:
+                num1 = Math.floor(Math.random() * 10) + 20;
+                num2 = Math.floor(Math.random() * 10) + 10;
+                break;
+        }
+        
+        const questionText = `${num1} + ${num2} = ?`;
+        document.getElementById("question").textContent = questionText;
     }
 
     currentAnswer = num1 + num2;
-    const questionText = `${num1} + ${num2} = ?`;
-    document.getElementById("question").textContent = questionText;
     
     const answerInput = document.getElementById("answer");
     if (answerInput) {
         answerInput.value = "";
         answerInput.disabled = false;
+        answerInput.focus();
     }
     
     questionHistory.push({
         questionNumber: currentQuestionNumber,
-        question: questionText,
+        question: level === 1 ? "Görsel toplama sorusu" : `${num1} + ${num2} = ?`,
         correctAnswer: currentAnswer,
         userAnswer: null,
         isCorrect: null
@@ -169,7 +248,7 @@ function generateQuestion(level) {
 
     hideAlert();
     updateScoreDisplay();
-    startTimer();  // Timer'ı başlat
+    startTimer();
 }
 
 function checkAnswer() {
