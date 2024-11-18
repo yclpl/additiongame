@@ -165,10 +165,9 @@ function generateQuestion(level) {
 
     // Seviye 1 için görsel toplama soruları
     if (level === 1) {
-        num1 = Math.floor(Math.random() * 5) + 1; // 1-5 arası
-        num2 = Math.floor(Math.random() * 5) + 1; // 1-5 arası
+        num1 = Math.floor(Math.random() * 10) + 1; // 1-5 arası
+        num2 = Math.floor(Math.random() * 10) + 1; // 1-5 arası
         
-        // Rastgele iki farklı nesne seç
         const item1Index = Math.floor(Math.random() * itemTypes.length);
         let item2Index;
         do {
@@ -178,12 +177,12 @@ function generateQuestion(level) {
         const item1 = items[itemTypes[item1Index]];
         const item2 = items[itemTypes[item2Index]];
 
-        // HTML oluştur
+        // Daha kompakt HTML yapısı
         const visualQuestion = `
             <div class="visual-question">
                 <div class="item-group">
                     <div class="items-container" style="background-color: ${item1.color}15;">
-                        ${Array(num1).fill(item1.icon).join('')}
+                        ${Array(num1).fill(item1.icon).map(icon => `<span class="item-icon">${icon}</span>`).join('')}
                     </div>
                     <span class="item-label">${num1} tane ${item1.name}</span>
                 </div>
@@ -192,14 +191,14 @@ function generateQuestion(level) {
                 
                 <div class="item-group">
                     <div class="items-container" style="background-color: ${item2.color}15;">
-                        ${Array(num2).fill(item2.icon).join('')}
+                        ${Array(num2).fill(item2.icon).map(icon => `<span class="item-icon">${icon}</span>`).join('')}
                     </div>
                     <span class="item-label">${num2} tane ${item2.name}</span>
                 </div>
                 
                 <div class="operator">=</div>
                 
-                <div class="answer-box">?</div>
+                
             </div>
         `;
 

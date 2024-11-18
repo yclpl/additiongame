@@ -507,63 +507,161 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    padding: 1rem;
+    gap: 0.75rem;
+    /* Azaltılmış dikey boşluk */
+    padding: 0.5rem;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .item-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.25rem;
+    /* Azaltılmış grup içi boşluk */
+    width: 100%;
 }
 
 .items-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
+    /* Azaltılmış öğeler arası boşluk */
     justify-content: center;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    min-height: 100px;
-    min-width: 200px;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    min-height: 60px;
+    /* Azaltılmış minimum yükseklik */
+    width: 100%;
+    max-width: 280px;
+    /* Maksimum genişlik sınırı */
     align-items: center;
+    margin: 0 auto;
 }
 
 .items-container i {
-    font-size: 2rem;
-    transition: transform 0.3s ease;
-}
-
-.items-container i:hover {
-    transform: scale(1.1);
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
 }
 
 .item-label {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #1a237e;
+    margin: 0;
+    line-height: 1.2;
 }
 
 .operator {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #3b82f6;
+    margin: 0;
+    line-height: 1;
+    height: 24px;
+    /* Sabit yükseklik */
+    display: flex;
+    align-items: center;
 }
 
 .answer-box {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border: 3px solid #3b82f6;
-    border-radius: 1rem;
+    border-radius: 0.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: bold;
     color: #1a237e;
     background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 0.25rem;
+}
+
+/* Mobil için özel düzenlemeler */
+@media (max-width: 576px) {
+    .visual-question {
+        gap: 0.5rem;
+        padding: 0.25rem;
+    }
+
+    .items-container {
+        padding: 0.5rem;
+        min-height: 50px;
+        gap: 0.4rem;
+    }
+
+    .items-container i {
+        font-size: 1.25rem;
+        /* Daha küçük ikonlar */
+    }
+
+    .item-label {
+        font-size: 0.9rem;
+    }
+
+    .operator {
+        font-size: 1.25rem;
+        height: 20px;
+    }
+
+    .answer-box {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        border-width: 2px;
+    }
+}
+
+/* Yatay mobil cihazlar için optimizasyon */
+@media (max-height: 600px) {
+    .visual-question {
+        gap: 0.4rem;
+    }
+
+    .items-container {
+        min-height: 45px;
+        padding: 0.4rem;
+    }
+
+    .item-label {
+        font-size: 0.85rem;
+    }
+
+    .operator {
+        height: 16px;
+        font-size: 1.25rem;
+    }
+}
+
+/* Küçük ekranlar için ek optimizasyonlar */
+@media (max-width: 320px) {
+    .items-container {
+        padding: 0.4rem;
+        min-height: 45px;
+    }
+
+    .items-container i {
+        font-size: 1.1rem;
+    }
+
+    .item-label {
+        font-size: 0.8rem;
+    }
+}
+
+/* Tablet ve orta boy ekranlar için düzenleme */
+@media (min-width: 577px) and (max-width: 768px) {
+    .visual-question {
+        gap: 0.6rem;
+    }
+
+    .items-container {
+        max-width: 320px;
+    }
 }
 
 /* Doğru cevap animasyonu */
