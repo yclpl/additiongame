@@ -11,9 +11,7 @@ let questionHistory = [];
 let selectedNumber = null;
 
 
-// Timer değişkeni
-let timer;
-let timeLeft = 20;
+
 
 // Oyun Başlangıç Fonksiyonları
 function startGame(event) {
@@ -247,12 +245,12 @@ function generateQuestion(level) {
 
     hideAlert();
     updateScoreDisplay();
-    startTimer();
+    
 }
 
 function checkAnswer() {
 
-    stopTimer(); // Timer'ı durdu
+    
 
     const answerInput = document.getElementById("answer");
     const userAnswer = parseInt(answerInput.value);
@@ -362,7 +360,7 @@ function generateEliminationQuestion(level) {
     selectedNumber = null;
     hideAlert();
     updateScoreDisplay();
-    startTimer();  // Timer'ı başlat
+    
 }
 
 function selectOption(number) {
@@ -383,7 +381,7 @@ function selectOption(number) {
 
 function checkEliminationAnswer(selectedNumber) {
 
-    stopTimer(); // Timer'ı durdur
+    
 
     const currentQuestion = questionHistory[currentQuestionNumber - 1];
     currentQuestion.userAnswer = selectedNumber;
@@ -559,8 +557,7 @@ function exitToLevelSelection() {
 
 function exitLevel() {
 
-    clearInterval(timer); // Timer'ı temizle
-
+    
     document.getElementById("game-section").style.display = "none";
     document.getElementById("level-selection").style.display = "block";
     
@@ -582,8 +579,7 @@ function exitLevel() {
 
 function exitToGameSelection() {
 
-    clearInterval(timer); // Timer'ı temizle
-
+    
     // Oyun bölümünü gizle, oyun seçim ekranını göster
     document.getElementById("game-section").style.display = "none";
     document.getElementById("summary-section").style.display = "none";
@@ -608,79 +604,3 @@ function exitToGameSelection() {
     hideAlert();
 }
 
-
-
-
-// Timer başlatma fonksiyonu
-function startTimer() {
-    timeLeft = 20;
-    updateTimerDisplay();
-    
-    clearInterval(timer); // Önceki timer'ı temizle
-    
-    timer = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        
-        // Son 5 saniye için uyarı efekti
-        if (timeLeft <= 5) {
-            document.querySelector('.timer').classList.add('warning');
-        }
-        
-        // Süre dolduğunda
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            timeOut();
-        }
-    }, 1000);
-}
-
-// Timer göstergesini güncelleme
-function updateTimerDisplay() {
-    const countdownElement = document.getElementById('countdown');
-    if (countdownElement) {
-        countdownElement.textContent = timeLeft;
-    }
-}
-
-// Süre dolunca
-function timeOut() {
-    const gameMode = document.getElementById("game-mode").value;
-    
-    if (gameMode === "elimination") {
-        // Eleme oyunu için
-        const buttons = document.querySelectorAll('.option-button');
-        buttons.forEach(button => button.disabled = true);
-    } else {
-        // Toplama oyunu için
-        const answerInput = document.getElementById("answer");
-        if (answerInput) {
-            answerInput.disabled = true;
-        }
-    }
-    
-    showAlert("Süre doldu! (-5 puan)", false);
-    currentScore -= 5;
-    wrongCount++;
-    updateScoreDisplay();
-    
-    setTimeout(() => {
-        if (currentQuestionNumber < totalQuestionsPerLevel) {
-            currentQuestionNumber++;
-            const gameMode = document.getElementById("game-mode").value;
-            if (gameMode === "elimination") {
-                generateEliminationQuestion(currentLevel);
-            } else {
-                generateQuestion(currentLevel);
-            }
-        } else {
-            showSummary();
-        }
-    }, 1500);
-}
-
-// Timer'ı durdur
-function stopTimer() {
-    clearInterval(timer);
-    document.querySelector('.timer').classList.remove('warning');
-}
